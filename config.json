@@ -1,0 +1,17 @@
+{
+  "crystal_disk_info_timeout_ms": 30000,
+  "crystal_disk_info_min_version": "9.0.0",
+  "language": "zh-CN",
+  "log_enabled": true,
+  "log_path": "logs/hwinfo_detect.log",
+  "log_level": "info",
+  "battery_default_voltage_mv": 11400,
+  "monitor_refresh_interval_ms": 2000,
+  "webview2_user_data_dir": "",
+  "crystal_disk_info_search_paths": [
+    "Tools/DiskInfo64.exe",
+    "Tools/DiskInfo32.exe",
+    "./CrystalDiskInfo/DiskInfo64.exe",
+    "./CrystalDiskInfo/DiskInfo32.exe"
+  ]
+}

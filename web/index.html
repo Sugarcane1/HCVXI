@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硬件检测 · 系统概览</title>
+<link rel="stylesheet" href="css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="title-bar" id="titleBar">
+  <div class="title-bar-drag" id="titleBarDrag">
+    <span class="title-bar-text">硬件检测</span>
+  </div>
+  <div class="title-bar-controls">
+    <button class="title-btn btn-minimize" id="btnMinimize" title="最小化"><i class="fas fa-minus"></i></button>
+    <button class="title-btn btn-maximize" id="btnMaximize" title="最大化"><i class="far fa-square"></i></button>
+    <button class="title-btn btn-close" id="btnClose" title="关闭"><i class="fas fa-times"></i></button>
+  </div>
+</div>
+
+<div class="left-sidebar" id="leftSidebar">
+  <div class="sidebar-header">
+    <i class="fas fa-microchip sidebar-logo"></i>
+    <div class="sidebar-header-text">
+      <span class="sidebar-label">硬件检测</span>
+      <span class="sidebar-datetime" id="headerDatetime"></span>
+    </div>
+  </div>
+  <div class="sidebar-monitor" id="sidebarMonitor">
+    <div class="monitor-gauge-stack">
+      <canvas id="gaugeCPU" width="150" height="150"></canvas>
+      <canvas id="gaugeGPU" width="150" height="150"></canvas>
+      <canvas id="gaugeRAM" width="150" height="150"></canvas>
+    </div>
+    <div class="monitor-info">
+      <span id="monCpuFreq">CPU 频率: --</span>
+      <span id="monGpuVram">GPU 显存: --</span>
+      <span id="monRamFree">RAM 空闲: --</span>
+    </div>
+  </div>
+  <button class="sidebar-toggle" id="sidebarToggle" title="折叠/展开侧栏">
+    <i class="fas fa-angles-left" id="toggleIcon"></i>
+  </button>
+</div>
+
+<div class="main-wrapper">
+  <div class="main-card">
+    <div class="left-panel" id="leftPanel">
+      <div id="hwContent">
+        <div class="loading-placeholder">等待数据传入...</div>
+      </div>
+    </div>
+    <div class="right-panel">
+      <div class="test-panel-title"><i class="fas fa-vial"></i>硬件测试</div>
+
+      <!-- Batch test controls -->
+      <div class="batch-controls" style="margin-bottom:10px;">
+        <button class="test-btn batch-run" onclick="window.runAllHardwareTests()" style="width:100%;padding:8px 0;font-size:12px;" title="自动按顺序测试全部硬件">
+          <i class="fas fa-play-circle"></i> 一键检测全部
+        </button>
+        <div class="batch-progress-wrap" id="batchProgressWrap" style="display:none;">
+          <div class="batch-progress">
+            <div class="batch-progress-fill" id="batchProgressBar" style="width:0%"></div>
+          </div>
+          <span class="batch-progress-text" id="batchProgressText">0/0</span>
+        </div>
+        <div class="batch-current-test" id="batchCurrentTest" style="display:none;"></div>
+      </div>
+
+      <div class="test-item" id="testCam">
+        <div class="test-icon cam"><i class="fas fa-camera"></i></div>
+        <div class="test-info">
+          <div class="test-name">摄像头</div>
+          <div class="test-status pending" id="statusCam">未测试</div>
+        </div>
+        <button class="test-btn start" id="btnCam" onclick="startCameraTest()">测试</button>
+      </div>
+
+      <div class="test-item" id="testMic">
+        <div class="test-icon mic"><i class="fas fa-microphone"></i></div>
+        <div class="test-info">
+          <div class="test-name">麦克风</div>
+          <div class="test-status pending" id="statusMic">未测试</div>
+        </div>
+        <button class="test-btn start" id="btnMic" onclick="startMicTest()">测试</button>
+      </div>
+
+      <div class="test-item" id="testSpk">
+        <div class="test-icon spk"><i class="fas fa-volume-up"></i></div>
+        <div class="test-info">
+          <div class="test-name">扬声器</div>
+          <div class="test-status pending" id="statusSpk">未测试</div>
+        </div>
+        <button class="test-btn start" id="btnSpk" onclick="startSpeakerTest()">测试</button>
+      </div>
+
+      <div class="test-item" id="testKey">
+        <div class="test-icon key"><i class="fas fa-keyboard"></i></div>
+        <div class="test-info">
+          <div class="test-name">键盘按键</div>
+          <div class="test-status pending" id="statusKey">未测试</div>
+        </div>
+        <button class="test-btn start" id="btnKey" onclick="startKeyboardTest()">测试</button>
+      </div>
+
+      <div class="test-item" id="testScr">
+        <div class="test-icon scr"><i class="fas fa-desktop"></i></div>
+        <div class="test-info">
+          <div class="test-name">屏幕</div>
+          <div class="test-status pending" id="statusScr">未测试</div>
+        </div>
+        <button class="test-btn start" id="btnScr" onclick="startScreenTest()">测试</button>
+      </div>
+
+      <div class="test-item" id="testTpd">
+        <div class="test-icon tpd"><i class="fas fa-hand-pointer"></i></div>
+        <div class="test-info">
+          <div class="test-name">触控板</div>
+          <div class="test-status pending" id="statusTpd">未测试</div>
+        </div>
+        <button class="test-btn start" id="btnTpd" onclick="startTouchpadTest()">测试</button>
+      </div>
+
+      <!-- Reset -->
+      <div style="margin-top:16px;padding-top:12px;border-top:1px solid #D5D3CE;">
+        <div style="margin-bottom:8px;">
+          <button class="test-btn reset" style="width:100%;padding:8px 0;font-size:11px;" onclick="window.resetAllTests()">
+            <i class="fas fa-redo"></i> 重置全部
+          </button>
+        </div>
+      </div>
+
+      <div class="guide-hint" id="guideHint">
+        <i class="fas fa-lightbulb"></i> 点击「一键检测全部」<br>或逐项点击「测试」按钮开始
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="test-overlay" id="testOverlay">
+  <div class="test-overlay-card" id="overlayCard"></div>
+</div>
+
+<div class="screen-test-area" id="screenTestArea" onclick="advanceScreenTest()">
+  <div class="screen-test-hint" id="screenTestHint">点击切换颜色 · 按 Esc 退出</div>
+</div>
+
+<script src="js/hw-render.js"></script>
+<script src="js/test-framework.js"></script>
+<script src="js/tests.js"></script>
+<script src="js/keyboard.js"></script>
+<script src="js/test-report.js"></script>
+<script src="js/test-connectivity.js"></script>
+<script src="js/monitor.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

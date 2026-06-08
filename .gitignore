@@ -1,0 +1,42 @@
+# Build outputs
+build/
+out/
+*.exe
+*.obj
+*.lib
+*.dll
+*.pdb
+*.ilk
+*.exp
+
+# IDE
+.vs/
+*.slnx.sqlite
+*.user
+.vscode/
+
+# Dependencies (runtime binaries, should be downloaded at install time)
+WebView2Runtime/
+*.cab
+
+# CrystalDiskInfo bundled binary
+CrystalDiskInfo*/
+
+# Portable package
+HardwareDetect-Portable/
+
+# Logs
+logs/
+*.log
+
+# Config (user's local overrides)
+config.local.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Archive files
+*.zip
+*.7z
+*.rar
