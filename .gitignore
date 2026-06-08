@@ -1,13 +1,21 @@
 # Build outputs
 build/
+!webview2_sdk/**/build/
 out/
 *.exe
+!webview2_sdk/**/*.exe
 *.obj
-*.lib
-*.dll
 *.pdb
 *.ilk
 *.exp
+
+# Libraries (except WebView2 SDK)
+*.lib
+!webview2_sdk/**/*.lib
+
+# DLLs (except WebView2 SDK)
+*.dll
+!webview2_sdk/**/*.dll
 
 # IDE
 .vs/
@@ -38,5 +46,6 @@ Thumbs.db
 
 # Archive files
 *.zip
+!webview2_sdk/**/*.zip
 *.7z
 *.rar
